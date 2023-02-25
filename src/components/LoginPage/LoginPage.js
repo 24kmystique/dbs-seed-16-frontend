@@ -54,7 +54,8 @@ function LoginPage() {
         } else {
           alert('Invalid employee ID or password');
         }
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   return (

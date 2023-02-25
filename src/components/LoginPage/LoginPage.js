@@ -21,14 +21,14 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const loginUser = (data) => {
-    // console.log(data.username);
-    // console.log(data.password);
-
     // save employee id to local storage
-    localStorage.setItem('employee_id', JSON.stringify(data.username));
+    localStorage.setItem('EMPOLYEE_ID', JSON.stringify(data.username));
+    localStorage.setItem('REACT_TOKEN_AUTH_KEY', JSON.stringify(data.username));
+    localStorage.setItem('FIRST_NAME', JSON.stringify(data.username));
+    localStorage.setItem('LAST_NAME', JSON.stringify(data.password));
 
     // get employee id from local storage
-    // console.log(JSON.parse(localStorage.getItem('employee_id')));
+    // console.log(JSON.parse(localStorage.getItem('EMPOLYEE_ID')));
 
     const requestOptions = {
       method: 'POST',
@@ -47,6 +47,8 @@ function LoginPage() {
           navigate('/');
 
           // save employee details to local storage
+          // localStorage.setItem('FIRST_NAME', JSON.stringify(data.first_name));
+          // localStorage.setItem('LAST_NAME', JSON.stringify(data.first_name));
         } else {
           alert('Invalid employee ID or password');
         }

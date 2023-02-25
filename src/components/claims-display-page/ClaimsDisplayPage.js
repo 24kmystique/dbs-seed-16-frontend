@@ -6,6 +6,7 @@ import { useState } from "react";
 // import components and styling
 import "./ClaimsDisplayPage.css";
 import ClaimTable from "./ClaimTable";
+import { Link } from 'react-router-dom';
 
 function ClaimsDisplayPage() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -114,7 +115,9 @@ function ClaimsDisplayPage() {
         <h2>Claims</h2>
       </div>
       <div className='claim-page__create-btn-wrapper'>
-        <Button variant="contained" startIcon={<AddCircleIcon />}>Create New Claim</Button>
+        <Button variant="contained" startIcon={<AddCircleIcon />}>
+          <Link to="/new-claim">Create New Claim</Link>
+        </Button>
       </div>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: "white",}}>

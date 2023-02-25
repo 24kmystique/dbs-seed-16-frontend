@@ -1,22 +1,112 @@
 // import libraries
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Button, Box, Tabs, Tab } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useState } from "react";
 
-
+// import components and styling
 import "./ClaimsDisplayPage.css";
+import ClaimTable from "./ClaimTable";
 
 function ClaimsDisplayPage() {
-  const claimPurpose = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-  const maxTextInCell = 50;
+  const [tabIndex, setTabIndex] = useState(0);
+  const fakeClaims = [
+    {
+      "ClaimID": 2018,
+      "InsuranceID": 1011,
+      "FirstName": "John",
+      "LastName": "Tan",
+      "ExpenseDate": "2022-10-10T08:00:00+08:00",
+      "Amount": 3000.00,
+      "Purpose": "Aircon Repair",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Pending",
+      "LastEditedClaimDate": "2022-10-15T17:45:52+08:00"
+     },
+     {
+      "ClaimID": 2019,
+      "InsuranceID": 1009,
+      "FirstName": "Martin",
+      "LastName": "Ong",
+      "ExpenseDate": "2022-10-26T08:00:00+08:00",
+      "Amount": 100.00,
+      "Purpose": "Dentist",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Approved",
+      "LastEditedClaimDate": "2022-10-28T13:08:24+08:00"
+     },
+     {
+      "ClaimID": 2021,
+      "InsuranceID": 1011,
+      "FirstName": "John",
+      "LastName": "Tan",
+      "ExpenseDate": "2022-12-20T08:00:00+08:00",
+      "Amount": 2000.00,
+      "Purpose": "Engine Repair",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Approved",
+      "LastEditedClaimDate": "2023-01-06T11:24:32+08:00"
+     },
+     {
+      "ClaimID": 2018,
+      "InsuranceID": 1011,
+      "FirstName": "John",
+      "LastName": "Tan",
+      "ExpenseDate": "2022-10-10T08:00:00+08:00",
+      "Amount": 3000.00,
+      "Purpose": "Aircon Repair",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Pending",
+      "LastEditedClaimDate": "2022-10-15T17:45:52+08:00"
+     },
+     {
+      "ClaimID": 2024,
+      "InsuranceID": 1009,
+      "FirstName": "Martin",
+      "LastName": "Ong",
+      "ExpenseDate": "2023-02-23T08:00:00+08:00",
+      "Amount": 100.00,
+      "Purpose": "Dentist",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Pending",
+      "LastEditedClaimDate": "2023-02-25T17:33:58+08:00"
+     },
+     {
+      "ClaimID": 2015,
+      "InsuranceID": 1009,
+      "FirstName": "Martin",
+      "LastName": "Ong",
+      "ExpenseDate": "2022-09-02T08:00:00+08:00",
+      "Amount": 100.00,
+      "Purpose": "Outpatient Claim",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Rejected",
+      "LastEditedClaimDate": "2022-09-03T10:30:00+08:00"
+     },
+     {
+      "ClaimID": 2016,
+      "InsuranceID": 1008,
+      "FirstName": "John",
+      "LastName": "Tan",
+      "ExpenseDate": "2022-09-04T08:00:00+08:00",
+      "Amount": 100.00,
+      "Purpose": "Outpatient Claim",
+      "FollowUp": 0,
+      "PreviousClaimID": null,
+      "Status": "Rejected",
+      "LastEditedClaimDate": "2022-09-05T13:25:29+08:00"
+     },
+  ];
 
-  function setClaimPurposeCell(text) {
-    if (text.length > maxTextInCell) {
-      return text.slice(0, maxTextInCell) + "...";
-    }
-    else return text;
-  }
+  const handleTabChange = (event, newTabIndex) => {
+    setTabIndex(newTabIndex);
+    console.log(newTabIndex);
+  };
 
   return (
     <div>
@@ -26,36 +116,21 @@ function ClaimsDisplayPage() {
       <div className='claim-page__create-btn-wrapper'>
         <Button variant="contained" startIcon={<AddCircleIcon />}>Create</Button>
       </div>
-      
-      <div className='claim-page__table-wrapper'>
-        <TableContainer className='claim-page__table-container'>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Claim Id</TableCell>
-                <TableCell>Purpose</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>123456</TableCell>
-                <TableCell>{setClaimPurposeCell(claimPurpose)}</TableCell>
-                <TableCell>Approved</TableCell>
-                <TableCell>
-                  <Button variant="contained" startIcon={<EditIcon />}>Edit</Button>
-                </TableCell>
-                <TableCell>
-                  <Button variant="outlined" startIcon={<DeleteIcon />}>Delete</Button>
-                </TableCell>
-              </TableRow>
 
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+      <Box>
+        <Tabs value={tabIndex} onChange={handleTabChange}>
+          <Tab label="View All"></Tab>
+          <Tab label="Pending"></Tab>
+          <Tab label="Approved"></Tab>
+          <Tab label="Rejected"></Tab>
+        </Tabs>
+      </Box>
+      
+      {tabIndex === 0 ? <ClaimTable claims={fakeClaims} /> : undefined}
+      {tabIndex === 1 ? <ClaimTable claims={fakeClaims} /> : undefined}
+      {tabIndex === 2 ? <ClaimTable claims={fakeClaims} /> : undefined}
+      {tabIndex === 3 ? <ClaimTable claims={fakeClaims} /> : undefined}
+
     </div>
   )
 }

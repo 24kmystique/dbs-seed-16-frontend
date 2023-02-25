@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Container } from "@mui/system";
-import { Card, Grid, ListItem, ListItemText, Typography } from "@mui/material";
+import { Button, Card, Grid, IconButton, ListItemText, Stack, Typography } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 
 function ViewClaim() {
   const [claimData, setClaimData] = useState({});
+  const [policyData, setPolicyData] = useState({});
 
   useEffect(() => {
     setClaimData({
@@ -15,6 +17,17 @@ function ViewClaim() {
       PreviousClaimId: 0,
       Status: "Pending",
       LastEditedClaimDate: "22 Feb 2023",
+    })
+
+    setPolicyData({
+      InsuranceId: "P123",
+      EmployeeId: "E111",
+      InsuranceType: "Life Insurance",
+      PolicyStartDate: "2 Feb 2022",
+      PolicyEndDate: "2 Feb 2032",
+      PolicyTerm: "10 years",
+      ClaimLimit: 100.00,
+      RemainingClaimLimit: 100.00,
     })
   }, [])
 
@@ -33,7 +46,7 @@ function ViewClaim() {
 
   
   return (
-    <Container>
+    <Container sx={{mb: 8}}>
       <h1>View Claim Details</h1>
       <hr></hr>
 
@@ -43,7 +56,18 @@ function ViewClaim() {
           p: 4
         }}
       >
-        <Typography variant="h5">Claim Details</Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
+          <Typography variant="h5">Claim Details</Typography>
+          <IconButton color="primary">
+            <EditIcon />
+          </IconButton>
+        </Stack>
+
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <ListItemText primary="Claim Id" secondary={claimData.ClaimId} />
@@ -81,7 +105,45 @@ function ViewClaim() {
         <Typography variant="h5">Policy Details</Typography>
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <ListItemText primary="Policy Id" secondary={claimData.ClaimId} />
+            <ListItemText primary="Policy Id" secondary={policyData.InsuranceId} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Employee Id" secondary={policyData.EmployeeId} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Insurance Type" secondary={policyData.InsuranceType} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Policy Start Date" secondary={policyData.PolicyStartDate} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Policy End Date" secondary={policyData.PolicyEndDate} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Policy Term" secondary={policyData.PolicyTerm} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Claim Limit" secondary={policyData.ClaimLimit} />
+          </Grid>
+          <Grid item xs={6}>
+            <ListItemText primary="Remaining Limit" secondary={policyData.RemainingClaimLimit} />
+          </Grid>
+        </Grid>
+      </Card>
+
+      <Card
+        variant="outlined"
+        sx={{
+          mt: 4,
+          p: 4
+        }}
+      >
+        <Grid container spacing={4}>
+          <Grid item xs={4}>
+            <Button variant="contained" color="error">Delete</Button>
+          </Grid>
+          <Grid item xs={8}>
+            Do note that deleting a claim that is a follow up claim will result in the entire chain of claims being deleted.
           </Grid>
         </Grid>
       </Card>

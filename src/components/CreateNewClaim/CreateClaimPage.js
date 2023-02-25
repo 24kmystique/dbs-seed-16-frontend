@@ -35,6 +35,7 @@ function CreateClaimPage() {
       >
         <TextField
           required
+          disabled
           id='outlined-disabled'
           label='First Name'
           defaultValue={firstName}
@@ -42,6 +43,7 @@ function CreateClaimPage() {
         />
         <TextField
           required
+          disabled
           id='outlined-disabled'
           label='Last Name'
           defaultValue={lastName}

@@ -23,9 +23,9 @@ function LoginPage() {
   const loginUser = (data) => {
     // save employee id to local storage
     localStorage.setItem('EMPOLYEE_ID', JSON.stringify(data.username));
-    localStorage.setItem('REACT_TOKEN_AUTH_KEY', JSON.stringify(data.username));
-    localStorage.setItem('FIRST_NAME', JSON.stringify(data.username));
-    localStorage.setItem('LAST_NAME', JSON.stringify(data.password));
+    // localStorage.setItem('REACT_TOKEN_AUTH_KEY', JSON.stringify(data.username));
+    // localStorage.setItem('FIRST_NAME', JSON.stringify(data.username));
+    // localStorage.setItem('LAST_NAME', JSON.stringify(data.password));
 
     // get employee id from local storage
     // console.log(JSON.parse(localStorage.getItem('EMPOLYEE_ID')));
@@ -38,17 +38,19 @@ function LoginPage() {
       body: JSON.stringify(data),
     };
 
-    fetch('url', requestOptions)
-      .then((res) => res.json)
+    fetch('/users/api/logIn', requestOptions)
+      .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.access_token) {
-          login(data.access_token);
+        if (data.token) {
+          console.log(data);
+          login(data.token);
           navigate('/');
 
           // save employee details to local storage
-          // localStorage.setItem('FIRST_NAME', JSON.stringify(data.first_name));
-          // localStorage.setItem('LAST_NAME', JSON.stringify(data.first_name));
+          localStorage.removeItem('FIRST_NAME');
+          localStorage.removeItem('LAST_NAME');
+          localStorage.setItem('FIRST_NAME', JSON.stringify(data.firstname));
+          localStorage.setItem('LAST_NAME', JSON.stringify(data.lastname));
         } else {
           alert('Invalid employee ID or password');
         }
@@ -73,7 +75,7 @@ function LoginPage() {
           label='Employee ID'
           type='text'
           helperText={username_helper}
-          {...register('username', { required: true })}
+          {...register('userid', { required: true })}
         />
         {/* {errors.username && { ...setUsernameType('outlined-error-helper-text') }} */}
         {errors.username && (

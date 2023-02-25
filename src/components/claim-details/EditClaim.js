@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button, Card, Dialog, DialogActions, Divider, Grid, ListItemText, TextField, Typography } from "@mui/material";
+import axios from "axios";
 
 function EditClaim(props) {
   const { showDialog, setShowDialog, claimData } = props;
   const [editedClaimData, setEditedClaimData] = useState({})
 
   useEffect(() => {
-    setEditedClaimData({...claimData})
+    setEditedClaimData({ ...claimData })
   }, [claimData])
 
   const getStatusColour = (status) => {
@@ -22,10 +23,23 @@ function EditClaim(props) {
     }
   }
 
+  const HandleSaveChanges = () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+      },
+      body: JSON.stringify(editedClaimData),
+    };
+
+    axios.post("http://localhost:8000/claim/api/update", requestOptions)
+  }
+
   return (
     <Dialog
       open={showDialog}
-      onClose={() => {setShowDialog(false)}}
+      onClose={() => { setShowDialog(false) }}
       fullWidth={true}
       maxWidth="80%"
     >
@@ -40,21 +54,21 @@ function EditClaim(props) {
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <ListItemText primary="Claim Id" />
-            <TextField value={editedClaimData.ClaimID}/>
+            <TextField value={editedClaimData.ClaimID} />
           </Grid>
           <Grid item xs={6}>
             <ListItemText primary="Expense Date" />
-            <TextField value={editedClaimData.ExpenseDate}/>
+            <TextField value={editedClaimData.ExpenseDate} />
 
           </Grid>
           <Grid item xs={6}>
             <ListItemText primary="Amount" />
-            <TextField value={editedClaimData.Amount}/>
+            <TextField value={editedClaimData.Amount} />
 
           </Grid>
           <Grid item xs={6}>
             <ListItemText primary="Purpose" />
-            <TextField value={editedClaimData.Purpose}/>
+            <TextField value={editedClaimData.Purpose} />
 
           </Grid>
           <Grid item xs={6}>
@@ -71,12 +85,12 @@ function EditClaim(props) {
           </Grid>
         </Grid>
 
-        <Divider light sx={{my: 2}}/>
+        <Divider light sx={{ my: 2 }} />
         <DialogActions>
-          <Button color="warning" onClick={() => {setShowDialog(false)}}>
+          <Button color="warning" onClick={() => { setShowDialog(false) }}>
             Cancel
           </Button>
-          <Button variant="contained">
+          <Button variant="contained" onClick={() => { HandleSaveChanges() }}>
             Save changes
           </Button>
         </DialogActions>

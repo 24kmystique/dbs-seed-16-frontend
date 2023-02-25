@@ -3,6 +3,8 @@ import EditClaim from "./EditClaim";
 import { Container } from "@mui/system";
 import { Button, Card, Grid, IconButton, ListItemText, Stack, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 function ViewClaim() {
   const [claimData, setClaimData] = useState({});
@@ -51,10 +53,20 @@ function ViewClaim() {
     if (claimData.Status === "Accepted") {
       return "";
     } else return (
-      <IconButton color="primary" onClick={() => { setShowDialog(true) }}>
-        <EditIcon />
-      </IconButton>
+      <Button size="large" variant="contained" onClick={() => { setShowDialog(true) }}>
+        <EditIcon sx={{mr: 2}} /> Edit Claim Details
+      </Button>
     );
+  }
+
+  const RenderCreateNewButton = () => {
+    if (claimData.Status === "Pending" || claimData.Status === "Accepted") {
+      return (
+        <Button size="large" variant="contained">
+          <AddCircleIcon sx={{ mr: 2 }} /> Create Follow Up
+        </Button>
+      );
+    } else return "";
   }
 
   return (
@@ -68,21 +80,24 @@ function ViewClaim() {
       <h1>View Claim Details</h1>
       <hr></hr>
 
+        <Stack
+          direction="row"
+          justifyContent="end"
+          alignItems="center"
+          spacing={2}
+          sx={{mt: 2}}
+        >
+          {RenderEditButton()}
+          {RenderCreateNewButton()}
+        </Stack>
+
       <Card
         sx={{
-          mt: 4,
+          mt: 2,
           p: 4
         }}
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={2}
-        >
-          <Typography variant="h5">Claim Details</Typography>
-          { RenderEditButton() }
-        </Stack>
+        <Typography variant="h5">Claim Details</Typography>
 
         <Grid container spacing={4}>
           <Grid item xs={6}>

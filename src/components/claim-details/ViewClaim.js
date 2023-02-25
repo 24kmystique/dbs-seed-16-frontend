@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import EditClaim from "./EditClaim";
 import { Container } from "@mui/system";
 import { Button, Card, Grid, IconButton, ListItemText, Stack, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -6,6 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 function ViewClaim() {
   const [claimData, setClaimData] = useState({});
   const [policyData, setPolicyData] = useState({});
+
+  const [showDialog, setShowDialog] = useState(false)
 
   useEffect(() => {
     setClaimData({
@@ -44,8 +47,23 @@ function ViewClaim() {
     }
   }
 
-  
+  const RenderEditButton = () => {
+    if (claimData.Status === "Accepted") {
+      return "";
+    } else return (
+      <IconButton color="primary" onClick={() => { setShowDialog(true) }}>
+        <EditIcon />
+      </IconButton>
+    );
+  }
+
   return (
+    <>
+    <EditClaim
+      showDialog={showDialog}
+      setShowDialog={setShowDialog}
+      claimData={claimData}
+    />
     <Container sx={{mb: 8}}>
       <h1>View Claim Details</h1>
       <hr></hr>
@@ -63,9 +81,7 @@ function ViewClaim() {
           spacing={2}
         >
           <Typography variant="h5">Claim Details</Typography>
-          <IconButton color="primary">
-            <EditIcon />
-          </IconButton>
+          { RenderEditButton() }
         </Stack>
 
         <Grid container spacing={4}>
@@ -138,16 +154,19 @@ function ViewClaim() {
           p: 4
         }}
       >
-        <Grid container spacing={4}>
-          <Grid item xs={4}>
-            <Button variant="contained" color="error">Delete</Button>
-          </Grid>
-          <Grid item xs={8}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+        >
+          <Button variant="contained" color="error" sx={{mr: 4}}>Delete</Button>
+          <span>
             Do note that deleting a claim that is a follow up claim will result in the entire chain of claims being deleted.
-          </Grid>
-        </Grid>
+          </span>
+        </Stack>
       </Card>
     </Container>
+    </>
   );
 }
 

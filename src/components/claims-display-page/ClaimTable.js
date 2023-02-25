@@ -50,7 +50,14 @@ function ClaimTable(props) {
             {claims.map((claim) => (
               <TableRow>
                 <TableCell>
-                  <Link to={"/claims/" + `${claim.ClaimID}`}>{claim.ClaimID}</Link>
+                  <Link
+                    to={"/claims/" + `${claim.ClaimID}`}
+                    state={{
+                      claimData: claim,
+                    }}
+                  >
+                    {claim.ClaimID}
+                  </Link>
                 </TableCell>
                 <TableCell>{setClaimPurposeCell(claim.Purpose)}</TableCell>
                 <TableCell>{claim.Status}</TableCell>

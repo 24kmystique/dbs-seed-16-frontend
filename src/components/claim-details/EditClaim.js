@@ -40,7 +40,7 @@ function EditClaim(props) {
         <Grid container spacing={4}>
           <Grid item xs={6}>
             <ListItemText primary="Claim Id" />
-            <TextField value={editedClaimData.ClaimId}/>
+            <TextField value={editedClaimData.ClaimID}/>
           </Grid>
           <Grid item xs={6}>
             <ListItemText primary="Expense Date" />

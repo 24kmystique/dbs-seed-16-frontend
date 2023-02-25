@@ -4,25 +4,30 @@ import { Container } from "@mui/system";
 import { Button, Card, Grid, IconButton, ListItemText, Stack, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useLocation } from "react-router-dom";
 
 
 function ViewClaim() {
-  const [claimData, setClaimData] = useState({});
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+
+  const [claimData, setClaimData] = useState(useLocation().state.claimData);
   const [policyData, setPolicyData] = useState({});
 
-  const [showDialog, setShowDialog] = useState(false)
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
-    setClaimData({
-      ClaimId: "123",
-      ExpenseDate: "22 Feb 2023",
-      Amount: 21,
-      Purpose: "I want to break free",
-      FollowUp: false,
-      PreviousClaimId: 0,
-      Status: "Pending",
-      LastEditedClaimDate: "22 Feb 2023",
-    })
+    // setClaimData({
+    //   ClaimId: "123",
+    //   ExpenseDate: "22 Feb 2023",
+    //   Amount: 21,
+    //   Purpose: "I want to break free",
+    //   FollowUp: false,
+    //   PreviousClaimId: 0,
+    //   Status: "Pending",
+    //   LastEditedClaimDate: "22 Feb 2023",
+    // })
+    // console.log(routerState)
+    // if (useLocation().state.claimData) setClaimData(routerState.claimData);
 
     setPolicyData({
       InsuranceId: "P123",
@@ -101,13 +106,13 @@ function ViewClaim() {
 
         <Grid container spacing={4}>
           <Grid item xs={6}>
-            <ListItemText primary="Claim Id" secondary={claimData.ClaimId} />
+            <ListItemText primary="Claim Id" secondary={claimData.ClaimID} />
           </Grid>
           <Grid item xs={6}>
-            <ListItemText primary="Expense Date" secondary={claimData.ExpenseDate} />
+              <ListItemText primary="Expense Date" secondary={new Date(claimData.ExpenseDate).toLocaleDateString(undefined, dateOptions)} />
           </Grid>
           <Grid item xs={6}>
-            <ListItemText primary="Amount" secondary={claimData.Amount} />
+            <ListItemText primary="Amount" secondary={"$" + claimData.Amount} />
           </Grid>
           <Grid item xs={6}>
             <ListItemText primary="Purpose" secondary={claimData.Purpose} />
@@ -122,7 +127,7 @@ function ViewClaim() {
             <ListItemText primary="Status" secondary={claimData.Status} secondaryTypographyProps={{ color: getStatusColour(claimData.Status)}} />
           </Grid>
           <Grid item xs={6}>
-            <ListItemText primary="Last Edited Date" secondary={claimData.LastEditedClaimDate} />
+              <ListItemText primary="Last Edited Date" secondary={new Date(claimData.LastEditedClaimDate).toLocaleDateString(undefined, dateOptions)} />
           </Grid>
         </Grid>
       </Card>

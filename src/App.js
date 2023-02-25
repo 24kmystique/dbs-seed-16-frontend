@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ClaimsDisplayPage />} />
-          <Route path="/view-claim" element={<ViewClaim />} />
+          <Route path="/claims/:id" element={<ViewClaim />} />
         </Routes>
       </BrowserRouter>
     </div>

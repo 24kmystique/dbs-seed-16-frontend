@@ -1,0 +1,14 @@
+.claim-page__header2-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.claim-page__create-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-right: 100px;
+  padding-bottom: 20px;
+}
+

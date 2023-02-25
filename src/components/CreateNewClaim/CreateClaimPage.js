@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Checkbox, FormGroup, FormControlLabel, InputAdornment } from '@mui/material';
+import { Box, TextField, Checkbox, FormGroup, FormControlLabel, InputAdornment, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import './CreateClaimPage.css';
@@ -8,13 +8,18 @@ function CreateClaimPage() {
   let firstName = JSON.parse(localStorage.getItem('FIRST_NAME'));
   let lastName = JSON.parse(localStorage.getItem('LAST_NAME'));
 
-  const [date, setDate] = useState();
+  const [isFollowUp, setFollowUp] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const createClaim = (data) => {
+    console.log(data);
+    alert('Help');
+  };
 
   return (
     <div className='container'>
@@ -28,8 +33,20 @@ function CreateClaimPage() {
         noValidate
         autoComplete='off'
       >
-        <TextField required disabled id='outlined-disabled' label='First Name' defaultValue={firstName} />
-        <TextField required disabled id='outlined-disabled' label='Last Name' defaultValue={lastName} />
+        <TextField
+          required
+          id='outlined-disabled'
+          label='First Name'
+          defaultValue={firstName}
+          {...register('firstName', { required: true })}
+        />
+        <TextField
+          required
+          id='outlined-disabled'
+          label='Last Name'
+          defaultValue={lastName}
+          {...register('lastName', { required: true })}
+        />
       </Box>
       <Box
         component='form'
@@ -40,7 +57,7 @@ function CreateClaimPage() {
         autoComplete='off'
       >
         <TextField required id='outlined-required' label='Receipt Number' />
-        <TextField required id='outlined-required' label='Date' />
+        <TextField required id='outlined-required' label='Date' {...register('date', { required: true })} />
         <br></br>
         <TextField
           required
@@ -52,12 +69,45 @@ function CreateClaimPage() {
             inputMode: 'numeric',
             pattern: '[0-9]*',
           }}
+          {...register('amount', { required: true })}
         />
-        <TextField required id='outlined-multiline-static' multiline rows={4} label='Purpose' />
+        <TextField
+          required
+          id='outlined-multiline-static'
+          multiline
+          rows={4}
+          label='Purpose'
+          {...register('purpose', { required: true })}
+        />
         <FormGroup sx={{ m: 1 }}>
-          <FormControlLabel control={<Checkbox />} label='Is a Follow-up Claim?' />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isFollowUp}
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  setFollowUp(e.target.checked);
+                }}
+              />
+            }
+            label='Is a Follow-up Claim?'
+            {...register('isFollowUp', { required: true })}
+          />
         </FormGroup>
-        <TextField id='outlined-basic' label='Previous Claim ID' />
+        {isFollowUp ? (
+          <TextField id='outlined-basic' label='Previous Claim ID' {...register('prevClaimId', { required: true })} />
+        ) : (
+          <></>
+        )}
+        <br></br>
+        <Button
+          variant='contained'
+          sx={{ width: '20ch' }}
+          size='large'
+          onClick={handleSubmit(handleSubmit(createClaim))}
+        >
+          Create Claim
+        </Button>
       </Box>
     </div>
   );

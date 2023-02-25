@@ -35,7 +35,7 @@ function ClaimTable(props) {
 
   return (
     <div className='claim-table__table-wrapper'>
-      <TableContainer className='claim-table__table-container'>
+      <TableContainer className='claim-table__table-container' sx={{background: "white"}}>
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>

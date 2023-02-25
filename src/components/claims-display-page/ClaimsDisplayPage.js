@@ -114,10 +114,10 @@ function ClaimsDisplayPage() {
         <h2>Claims</h2>
       </div>
       <div className='claim-page__create-btn-wrapper'>
-        <Button variant="contained" startIcon={<AddCircleIcon />}>Create</Button>
+        <Button variant="contained" startIcon={<AddCircleIcon />}>Create New Claim</Button>
       </div>
 
-      <Box>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: "white",}}>
         <Tabs value={tabIndex} onChange={handleTabChange}>
           <Tab label="View All"></Tab>
           <Tab label="Pending"></Tab>

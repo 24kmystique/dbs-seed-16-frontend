@@ -44,7 +44,7 @@ function CreateClaimPage() {
       .then((data) => {
         if (data) {
           console.log(data);
-          if (data.status === 201) navigate('/');
+          navigate('/');
         } else {
           alert('Create claim failed');
         }
@@ -91,6 +91,7 @@ function CreateClaimPage() {
           <small>Required</small>
         </p>
       )}
+      <br></br>
       <Box
         component='form'
         sx={{
@@ -112,7 +113,9 @@ function CreateClaimPage() {
             <small>Required</small>
           </p>
         )}
+        <br></br>
         <TextField id='outlined-required' label='Receipt Number' />
+        <br></br>
         <TextField required id='outlined-required' label='Date' {...register('expenseDate', { required: true })} />
         {errors.expenseDate && (
           <p style={{ color: 'red' }}>
@@ -138,6 +141,7 @@ function CreateClaimPage() {
             <small>Require a number</small>
           </p>
         )}
+        <br></br>
         <TextField
           required
           id='outlined-multiline-static'
@@ -151,6 +155,7 @@ function CreateClaimPage() {
             <small>Required</small>
           </p>
         )}
+        <br></br>
         <FormGroup sx={{ m: 1 }}>
           <FormControlLabel
             control={
@@ -171,6 +176,7 @@ function CreateClaimPage() {
             <small>Required</small>
           </p>
         )}
+        <br></br>
         {followUp ? (
           <TextField id='outlined-basic' label='Previous Claim ID' {...register('previousClaimId')} />
         ) : (

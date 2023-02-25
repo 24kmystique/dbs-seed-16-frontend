@@ -84,6 +84,7 @@ function LoginPage() {
             <small>Required</small>
           </p>
         )}
+        <br></br>
         <TextField
           required
           id={password_type}
